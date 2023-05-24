@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GeneralController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+//belum login masuk ke sini
+Route::middleware('guest')->group(function() {
+    Route::get('/', [GeneralController::class, 'loginPage']);
+    Route::post('/', [GeneralController::class, 'loginCek']);
+});
+
+//sudah login masuk ke sini
+Route::middleware('auth')->group(function(){
+    Route::get('/dashboard', function() {
+        return "ANDA BERHASIL MASUK DASHBOARD";
+    });
 });
